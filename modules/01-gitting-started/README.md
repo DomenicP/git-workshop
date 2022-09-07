@@ -163,7 +163,7 @@ Changes not staged for commit:
   (use "git restore <file>..." to discard changes in working directory)
         modified:   helloworld.txt
 
-# Diff the working tree against the staging area
+# Diff the working tree against the staging area + repo
 ~/src/git-workshop $ git diff
 diff --git a/helloworld.txt b/helloworld.txt
 index af5626b..f64c220 100644
@@ -221,4 +221,78 @@ Go to https://github.com/new to create a new repository. Create the repository u
 account and name it `git-workshop`. Do not initialize the repository with a README, .gitignore, or
 license.
 
-After you create the GitHub repository you will be prompted with the steps required to add a remote to your local repo and then push the contents from your computer to GitHub.
+After you create the GitHub repository you will be prompted with the steps required to add a remote to your local repo and then push the contents from your computer to GitHub. You can authenticate with GitHub using HTTPS or [SSH keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+```bash
+# Add the GitHub repo as a remote named `origin`
+# Uses SSH authentication
+~/src/git-workshop $ git remote add origin git@github.com:<username>/git-workshop.git
+
+# Rename the default branch from `master` to `main`
+~/src/git-workshop $ git branch -M main
+
+# Push the local main branch and setup an upstream (tracking) reference
+~/src/git-workshop $ git push -u origin main
+```
+
+A local branch can have an upstream (tracking) reference. In this example, the local branch `main`
+is now set to track the remote branch `origin/main`. This means that when `main` is checked out
+locally `git push` will push commits from the local `main` branch to `origin/main` and `git pull`
+will pull commits from `origin/main` to the local `main` branch. The upstream reference only needs
+to be set when initially pushing a branch to a remote.
+
+# Unstaging changes
+
+```bash
+# Add a new file
+~/src/git-workshop $ echo "temp change" > temp.txt
+
+~/src/git-workshop $ git status
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        temp.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+# Stage the file
+~/src/git-workshop $ git add temp.txt
+
+~/src/git-workshop $ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   temp.txt
+
+# Unstage all staged files
+~/src/git-workshop $ git restore --staged .
+
+~/src/git-workshop $ git status
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        temp.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+# Remove the file to get back to a clean working tree
+~/src/git-workshop $ rm temp.txt
+
+~/src/git-workshop $ git status
+On branch main
+nothing to commit, working tree clean
+```
+
+# Recap
+
+In this module you learned:
+
+* How to create a new local Git repository
+* The difference between the working tree and the staging area
+* How to add untracked files
+* How to modify tracked files
+* How to view diffs for both the working tree and staged files
+* How to create a new GitHub repository
+* How to add a remote to a local repo
+* How to push a branch and create an upstream (tracking) reference
+* How to unstage changes

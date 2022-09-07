@@ -1,4 +1,4 @@
-# git_workshop
+# git-workshop
 
 Hands-on Git workshop to practice your skills and Git good!
 
