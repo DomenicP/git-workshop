@@ -6,6 +6,7 @@ Hands-on Git workshop to practice your skills and Git good!
 
 * [Module 1: Gitting Started](modules/01-gitting-started/README.md)
 * [Module 2: Feature Branch Workflow](modules/02-feature-branch-workflow/README.md)
+* [Module 3: Stacking Feature Branches](modules/03-stacking-feature-branches/README.md)
 
 ## Installing Git
 
