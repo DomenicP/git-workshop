@@ -31,7 +31,6 @@ author:
   name: Domenic Rodriguez
 
 # Build settings
-# theme: minima
 remote_theme: jekyll/minima
 plugins:
   - jekyll-feed
@@ -40,6 +39,7 @@ minima:
   skin: dark
   social_links:
     github: DomenicP
+    linkedin: domenicprodriguez
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -60,3 +60,8 @@ minima:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
