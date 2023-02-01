@@ -5,8 +5,7 @@ title: Start Here
 
 ## Installing Git
 
-This workshop will generally assume that you are using a Linux terminal, but everything should work
-under Windows as well if you substitute appropriate shell commands.
+This workshop will generally assume that you are using a Linux terminal, but everything should work under Windows as well if you substitute appropriate shell commands.
 
 ### Ubuntu
 
@@ -16,8 +15,7 @@ If Git is not already installed, use the following command to install it:
 sudo apt update && sudo apt install git
 ```
 
-If you want the latest and greatest Git features you can also install Git from a
-[PPA](https://launchpad.net/~git-core/+archive/ubuntu/ppa).
+If you want the latest and greatest Git features you can also install Git from a [PPA](https://launchpad.net/~git-core/+archive/ubuntu/ppa).
 
 ### Windows
 
@@ -27,11 +25,9 @@ Download and run the installer from the [Git for Windows](https://gitforwindows.
 
 #### Chocolatey
 
-[Chocolatey](https://chocolatey.org/) is a package manager for Windows based on the NuGet package
-format.
+[Chocolatey](https://chocolatey.org/) is a package manager for Windows based on the NuGet package format.
 
-First follow the instructions found [here](https://chocolatey.org/install) to install Chocolatey for
-individual use. Then run the following command in an administrator command prompt:
+First follow the instructions found [here](https://chocolatey.org/install) to install Chocolatey for individual use. Then run the following command in an administrator command prompt:
 
 ```shell
 choco install -y git
@@ -56,6 +52,12 @@ git config --global core.autocrlf false
 
 # Prefer a rebase instead of a merge commit when pulling a branch
 git config --global pull.rebase true
+
+# Some optional but convenient aliases
+git config --global alias.gr "log --oneline --graph --decorate --all"
+git config --global alias.fe "fetch -pt"
+git config --global alias.br "branch"
+git config --global alias.sup "submodule update --init --recursive"
 ```
 
 Now you should be ready to start with [Module 1][1]!

@@ -12,11 +12,7 @@ date:   2022-09-07 12:00:00 -0400
 
 ## Visualizing Git history
 
-Git history is a graph where each node is a commit that points back to a parent (or two parents for
-merge commits). It's important to have good tools to visualize Git history in order to understand
-what's going on. Various Git GUIs are available as well as plugins for editors (such as
-[Git Graph][git-graph]). You can also use `git log` from the command line to generate visualizations
-of Git history
+Git history is a graph where each node is a commit that points back to a parent (or two parents for merge commits). It's important to have good tools to visualize Git history in order to understand what's going on. Various Git GUIs are available as well as plugins for editors (such as [Git Graph][git-graph]). You can also use `git log` from the command line to generate visualizations of Git history
 
 ```bash
 # Regular `git log`
@@ -35,40 +31,33 @@ Date:   Wed Sep 7 14:18:20 2022 -0400
 
 # `git log` with a nice tree view
 # Your terminal should have pretty colors
-# Consider creating a `gl` alias so you don't have to remember all of these flags
+# Consider creating a `git gr` alias so you don't have to remember all of these flags
 ~/src/git-workshop $ git log --oneline --graph --decorate --all
+* 8adbc7b (HEAD -> main, origin/main) Add content to helloworld.txt
+* 3e228e1 Initial commit
+
+~/src/git-workshop $ git config --global alis.gr "log --oneline --graph --decorate --all"
+~/src/git-workshop $ git gr
 * 8adbc7b (HEAD -> main, origin/main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-Branches in Git are lightweight and can easily be created and destroyed as needed. A branch is just
-a pointer to a commit. Because Git is a distributed version control system the local repo and remote
-repos each have their own individual branches. Remote branches are prefixed by their remote name
-(such as `origin/main` in the example above).
+Branches in Git are lightweight and can easily be created and destroyed as needed. A branch is just a pointer to a commit. Because Git is a distributed version control system the local repo and remote repos each have their own individual branches. Remote branches are prefixed by their remote name (such as `origin/main` in the example above).
 
 [git-graph]: https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
 
 ## Detached HEAD
 
-In Git the special term `HEAD` is a pointer to the current branch (shown as `HEAD -> main` in the
-log output above). Git allows you to check out branches but also to check out individual commits.
-Checking out individual commits puts you into a **detached HEAD** state. This is something that is
-pretty easy to accidentally do when you're still new to Git and can be scary if you don't know
-what's going on. Let's intentionally enter a detached HEAD state by checking out the initial commit
-(note that you'll need to update commit hashes based on what you see in your local repo since they
-will be different than the values on this page):
+In Git the special term `HEAD` is a pointer to the current branch (shown as `HEAD -> main` in the log output above). Git allows you to check out branches but also to check out individual commits. Checking out individual commits puts you into a **detached HEAD** state. This is something that is pretty easy to accidentally do when you're still new to Git and can be scary if you don't know what's going on. Let's intentionally enter a detached HEAD state by checking out the initial commit (note that you'll need to update commit hashes based on what you see in your local repo since they will be different than the values on this page):
 
 ```bash
 # Checkout a specific commit by hash
 ~/src/git-workshop $ git checkout 3e228e1
 Note: switching to '3e228e1'.
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by switching back to a branch.
+You are in 'detached HEAD' state. You can look around, make experimental changes and commit them, and you can discard any commits you make in this state without impacting any branches by switching back to a branch.
 
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -c with the switch command. Example:
+If you want to create a new branch to retain commits you create, you may do so (now or later) by using -c with the switch command. Example:
 
   git switch -c <new-branch-name>
 
@@ -81,18 +70,14 @@ Turn off this advice by setting config variable advice.detachedHead to false
 HEAD is now at 3e228e1 Initial commit
 
 # TL;DR: we're now not on any branch. Let's see what that looks like in terms of the graph
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 8adbc7b (origin/main, main) Add content to helloworld.txt
 * 3e228e1 (HEAD) Initial commit
 ```
 
-(The Git output above mentions the new `git switch` command that was recently added. You are welcome
-to investigate using this command but this workshop will use the more traditional `git checkout`
-command instead.)
+(The Git output above mentions the new `git switch` command that was recently added. You are welcome to investigate using this command but this workshop will use the more traditional `git checkout` command instead.)
 
-After checking out a specific commit by hash, `HEAD` now points to a commit instead of a branch.
-From this state you can either create a new branch at the commit that is checked out or you can
-checkout a branch again. Let's go back to `main`
+After checking out a specific commit by hash, `HEAD` now points to a commit instead of a branch. From this state you can either create a new branch at the commit that is checked out or you can checkout a branch again. Let's go back to `main`
 
 ```bash
 ~/src/git-workshop $ git checkout main
@@ -100,7 +85,7 @@ Previous HEAD position was 3e228e1 Initial commit
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 8adbc7b (HEAD -> main, origin/main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
@@ -113,7 +98,7 @@ Let's create a new branch to do some work on:
 ~/src/git-workshop $ git checkout -b my-first-feature
 Switched to a new branch 'my-first-feature'
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 8adbc7b (HEAD -> my-first-feature, origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
@@ -123,9 +108,7 @@ Switched to a new branch 'my-first-feature'
 1. Creates a new branch called `<name>`.
 2. Checks out the newly created branch.
 
-From the `gl` output we see that `HEAD` now points to `my-first-feature` indicating that this is the
-branch that is now checked out. We also see that there are three branches point to the same
-`8adbc7b` commit:
+From the `git gr` output we see that `HEAD` now points to `my-first-feature` indicating that this is the branch that is now checked out. We also see that there are three branches point to the same `8adbc7b` commit:
 
 * `my-first-feature`
 * `main`
@@ -146,13 +129,11 @@ We can use `git branch` to list all local branches, and `git branch -a` to list 
   remotes/origin/main
 ```
 
-In the output above the `*` indicates the currently checked out branch. Your terminal may also
-display remote branches (prefixed with `remotes/origin/`) in a different color.
+In the output above the `*` indicates the currently checked out branch. Your terminal may also display remote branches (prefixed with `remotes/origin/`) in a different color.
 
 ## Pushing the feature branch to GitHub
 
-Even though we haven't actually made any changes yet, we can still push the feature branch to
-the remote:
+Even though we haven't actually made any changes yet, we can still push the feature branch to the remote:
 
 ```bash
 ~/src/git-workshop $ git push -u origin my-first-feature
@@ -165,14 +146,12 @@ To github.com:<user>/git-workshop.git
  * [new branch]      my-first-feature -> my-first-feature
 Branch 'my-first-feature' set up to track remote branch 'my-first-feature' from 'origin'.
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 8adbc7b (HEAD -> my-first-feature, origin/my-first-feature, origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-We use the `-u` flag with `git push` just like in Module 1 to ensure that the upstream tracking
-reference is created. Also note that after pushing the branch to GitHub there is now an additional
-`origin/my-first-feature` branch shown in the `gl` output.
+We use the `-u` flag with `git push` just like in Module 1 to ensure that the upstream tracking reference is created. Also note that after pushing the branch to GitHub there is now an additional `origin/my-first-feature` branch shown in the `git gr` output.
 
 Let's actually do some "work" and commit the changes:
 
@@ -193,16 +172,13 @@ Your branch is ahead of 'origin/my-first-feature' by 1 commit.
 
 nothing to commit, working tree clean
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 70e6b9f (HEAD -> my-first-feature) Add a really cool feature
 * 8adbc7b (origin/my-first-feature, origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-After committing `git status` tells us that `my-first-feature` is ahead of `origin/my-first-feature`
-by 1 commit. This information is available because we created the upstream tracking reference when
-initially pushing this branch to GitHub. `gl` confirms the same thing as `git status` showing that
-the local branch points to the new commit and the remote branch still points where it started.
+After committing `git status` tells us that `my-first-feature` is ahead of `origin/my-first-feature` by 1 commit. This information is available because we created the upstream tracking reference when initially pushing this branch to GitHub. `git gr` confirms the same thing as `git status` showing that the local branch points to the new commit and the remote branch still points where it started.
 
 Let's follow Git's advice and push the new commit to GitHub:
 
@@ -217,27 +193,19 @@ Total 3 (delta 0), reused 0 (delta 0)
 To github.com:<user>/git-workshop.git
    8adbc7b..70e6b9f  my-first-feature -> my-first-feature
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 70e6b9f (HEAD -> my-first-feature, origin/my-first-feature) Add a really cool feature
 * 8adbc7b (origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-Note that we could use `git push` by itself this time; we didn't need to specify the remote branch
-because Git already knows from the tracking reference.
+Note that we could use `git push` by itself this time; we didn't need to specify the remote branch because Git already knows from the tracking reference.
 
-After pushing we see `my-first-feature` and `origin/my-first-feature` once again point to the same
-commit. Manual synchronization between distributed copies of the repository is one of the most
-important concepts to understand in Git, especially when coming from client-server systems like
-SVN. Modifying a local branch (creating commits, resetting the branch, etc.) has no impact on
-remote branches until they are manually synchronized using a push, pull, or fetch!
+After pushing we see `my-first-feature` and `origin/my-first-feature` once again point to the same commit. Manual synchronization between distributed copies of the repository is one of the most important concepts to understand in Git, especially when coming from client-server systems like SVN. Modifying a local branch (creating commits, resetting the branch, etc.) has no impact on remote branches until they are manually synchronized using a push, pull, or fetch!
 
 ## Pulling the feature branch on another machine
 
-To make things more interesting, let's introduce another copy of the repository into the mix. Let's
-say you've been working on your desktop up until now but now you'd like to transfer code onto your
-laptop so that you can test it with some hardware. To simulate working on another computer, let's
-clone a second copy of the repository on your local machine:
+To make things more interesting, let's introduce another copy of the repository into the mix. Let's say you've been working on your desktop up until now but now you'd like to transfer code onto your laptop so that you can test it with some hardware. To simulate working on another computer, let's clone a second copy of the repository on your local machine:
 
 ```bash
 ~/src/git-workshop $ cd ~/src
@@ -265,20 +233,15 @@ Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
 
-~/src/git-workshop-2 $ gl
+~/src/git-workshop-2 $ git gr
 * 70e6b9f (origin/my-first-feature) Add a really cool feature
 * 8adbc7b (HEAD -> main, origin/main, origin/HEAD) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-(Even though this secondary copy is still on the same computer we can pretend like it's on a
-different machine; the behavior will be exactly the same.)
+(Even though this secondary copy is still on the same computer we can pretend like it's on a different machine; the behavior will be exactly the same.)
 
-The fresh clone of the repo in `git-workshop-2` has `main` checked out by default. Once again, note
-that this `main` branch is a different branch branch from `origin/main` and `main` in the "desktop"
-repo. All three branches happen to point to the same commit at the moment. It is worth noting that
-`origin/main` in both the "desktop" and "laptop" repos refers to the same branch on GitHub since
-`origin` points to the same remote repo in both local repos.
+The fresh clone of the repo in `git-workshop-2` has `main` checked out by default. Once again, note that this `main` branch is a different branch branch from `origin/main` and `main` in the "desktop" repo. All three branches happen to point to the same commit at the moment. It is worth noting that `origin/main` in both the "desktop" and "laptop" repos refers to the same branch on GitHub since `origin` points to the same remote repo in both local repos.
 
 Let's checkout the feature branch on the "laptop:"
 
@@ -288,15 +251,14 @@ Let's checkout the feature branch on the "laptop:"
 Branch 'my-first-feature' set up to track remote branch 'my-first-feature' from 'origin'.
 Switched to a new branch 'my-first-feature'
 
-~/src/git-workshop-2 $ gl
+~/src/git-workshop-2 $ git gr
 * 70e6b9f (HEAD -> my-first-feature, origin/my-first-feature) Add a really cool feature
 * 8adbc7b (origin/main, origin/HEAD, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-Let's take a look at what happened with this `git checkout` command. We didn't use the `-b` flag,
-however a new local branch was still created. Why? Because Git recognized that there was a remote
-branch named `my-first-feature` and took initiative to do the following:
+Let's take a look at what happened with this `git checkout` command. We didn't use the `-b` flag, however a new local branch was still created. Why? Because Git recognized that there was a remote branch named `my-first-feature` and took initiative to do the following:
+
 * Git created a new local branch named `my-first-feature` that points to the same commit as
   `origin/my-first-feature`
 * Git setup upstream tracking between the new local `my-first-feature` branch and
@@ -305,21 +267,16 @@ branch named `my-first-feature` and took initiative to do the following:
 
 ---
 
-***IMPORTANT**: This only worked because we asked Git to checkout `my-first-feature`, not
-`origin/my-first-feature`. If we had instead run the command `git checkout origin/my-first-feature`
-we would have ended up in a detached HEAD state!*
+_**IMPORTANT**: This only worked because we asked Git to checkout `my-first-feature`, not `origin/my-first-feature`. If we had instead run the command `git checkout origin/my-first-feature` we would have ended up in a detached HEAD state!_
 
 ```bash
 # Just for illustration, you don't need to run these commands
 ~/src/git-workshop-2 $ git checkout origin/my-first-feature
 Note: switching to 'origin/my-first-feature'.
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by switching back to a branch.
+You are in 'detached HEAD' state. You can look around, make experimental changes and commit them, and you can discard any commits you make in this state without impacting any branches by switching back to a branch.
 
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -c with the switch command. Example:
+If you want to create a new branch to retain commits you create, you may do so (now or later) by using -c with the switch command. Example:
 
   git switch -c <new-branch-name>
 
@@ -375,7 +332,7 @@ Your branch is ahead of 'origin/my-first-feature' by 3 commits.
 
 nothing to commit, working tree clean
 
-~/src/git-workshop-2 $ gl
+~/src/git-workshop-2 $ git gr
 * 5ac8ea0 (HEAD -> my-first-feature) Finally got it working
 * 61284ab More integration testing
 * c9698e5 Integration testing
@@ -384,8 +341,7 @@ nothing to commit, working tree clean
 * 3e228e1 Initial commit
 ```
 
-Just like before, the local `my-first-feature` branch moved forward with the new commits but the
-remote branch on GitHub is out of date. Let's push the local commits to GitHub:
+Just like before, the local `my-first-feature` branch moved forward with the new commits but the remote branch on GitHub is out of date. Let's push the local commits to GitHub:
 
 ```bash
 # Still on the "laptop"
@@ -400,8 +356,7 @@ To github.com:<user>/git-workshop.git
    70e6b9f..5ac8ea0  my-first-feature -> my-first-feature
 ```
 
-With everything tested and working, let's switch back to the "desktop" so that we can clean things
-up before opening a PR:
+With everything tested and working, let's switch back to the "desktop" so that we can clean things up before opening a PR:
 
 ```bash
 # Switch back to the "desktop"
@@ -414,43 +369,28 @@ Your branch is up to date with 'origin/my-first-feature'.
 
 nothing to commit, working tree clean
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 70e6b9f (HEAD -> my-first-feature, origin/my-first-feature) Add a really cool feature
 * 8adbc7b (origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-Huh, that's funny. Where are the new commits and why does the "desktop" Git repo think everything is
-up to date? Until we run a command that synchronizes our "desktop" Git repo with GitHub we won't
-have information about the work done elsewhere. There are two primary ways for Git to retrieve
-information from a remote: `git pull` and `git fetch`.
+Huh, that's funny. Where are the new commits and why does the "desktop" Git repo think everything is up to date? Until we run a command that synchronizes our "desktop" Git repo with GitHub we won't have information about the work done elsewhere. There are two primary ways for Git to retrieve information from a remote: `git pull` and `git fetch`.
 
 ---
 
-`git fetch` retrieves branches, tags, and objects from a remote repository to update the local
-history. For a local repo with one remote (typically `origin`) `git fetch` will fetch from that
-remote. If your local repo is configured with more than one remote you may need to specify which
-remote you want to fetch from or use the `--all` flag.
+`git fetch` retrieves branches, tags, and objects from a remote repository to update the local history. For a local repo with one remote (typically `origin`) `git fetch` will fetch from that remote. If your local repo is configured with more than one remote you may need to specify which remote you want to fetch from or use the `--all` flag.
 
 Using the `-p` and `-t` flags with `git fetch` can be helpful since they do the following:
 
-* `-p, --prune`: Removes local references to remote branches that were deleted (this is *not* done
-  by default)
+* `-p, --prune`: Removes local references to remote branches that were deleted (this is *not* done by default)
 * `-t, --tags`: Fetches all tags from the remote (more on tags later)
 
-`git pull` on the other hand is shorthand for `git fetch` followed by `git merge`. `git pull` is
-convenient for quickly pulling in updates from a remote branch, but it can be dangerous if history
-has diverged between the local repo and remote repo (more on this later). `git pull` risks creating
-a merge commit or starting a rebase. To avoid this risk use `git pull --ff-only` which will only
-work if the local branch can be **fast-forwarded** (i.e. the local branch pointer can be advanced to
-catch up to the remote branch pointer without creating any new commits or needing any merge/rebase).
-If `git pull --ff-only` fails then you can use `git fetch` along with the methods about to be
-described to resolve the situation without accidentally creating a merge commit.
+`git pull` on the other hand is shorthand for `git fetch` followed by `git merge`. `git pull` is convenient for quickly pulling in updates from a remote branch, but it can be dangerous if history has diverged between the local repo and remote repo (more on this later). `git pull` risks creating a merge commit or starting a rebase. To avoid this risk use `git pull --ff-only` which will only work if the local branch can be **fast-forwarded** (i.e. the local branch pointer can be advanced to catch up to the remote branch pointer without creating any new commits or needing any merge/rebase). If `git pull --ff-only` fails then you can use `git fetch` along with the methods about to be described to resolve the situation without accidentally creating a merge commit.
 
 ---
 
-Let's do a `git fetch` now followed by a `git merge --ff-only` to update our "desktop" branch to
-match GitHub:
+Let's do a `git fetch` now followed by a `git merge --ff-only` to update our "desktop" branch tomatch GitHub:
 
 ```bash
 # Fetch from origin (GitHub)
@@ -464,7 +404,7 @@ From github.com:<user>/git-workshop
    70e6b9f..5ac8ea0  my-first-feature -> origin/my-first-feature
 
 # Now we can see the new commits
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 5ac8ea0 (origin/my-first-feature) Finally got it working
 * 61284ab More integration testing
 * c9698e5 Integration testing
@@ -481,7 +421,7 @@ Fast-forward
  1 file changed, 3 insertions(+)
 
 # Check that everything worked correctly
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 5ac8ea0 (HEAD -> my-first-feature, origin/my-first-feature) Finally got it working
 * 61284ab More integration testing
 * c9698e5 Integration testing
@@ -492,36 +432,19 @@ Fast-forward
 
 ## Squashing intermediate commits
 
-When we were doing integration testing on the "laptop" we made a bit of a mess with those
-intermediate work-in-progress commits. Let's clean things up and squash those three commits down to
-a single commit.
+When we were doing integration testing on the "laptop" we made a bit of a mess with those intermediate work-in-progress commits. Let's clean things up and squash those three commits down to a single commit.
 
 ---
 
-***WARNING**: This is where we have to start being more careful since this is the first time that
-we're rewriting Git history. Some developers are opposed to this practice, but there can be value to
-editing the revision history to be more meaningful and get rid of noise instead of insisting that
-every commit ever created be kept forever.*
+_**WARNING**: This is where we have to start being more careful since this is the first time that we're rewriting Git history. Some developers are opposed to this practice, but there can be value to editing the revision history to be more meaningful and get rid of noise instead of insisting that every commit ever created be kept forever._
 
 ---
 
-The standard way to squash commits is by doing an interactive rebase. Rebasing is an advanced topic
-but a very powerful tool. The interactive rebase tool can be used to do quite a few different
-things. For now we'll only worry about squashing commits.
+The standard way to squash commits is by doing an interactive rebase. Rebasing is an advanced topic but a very powerful tool. The interactive rebase tool can be used to do quite a few different things. For now we'll only worry about squashing commits.
 
-First let's answer the question "what is the base of a branch?" Every branch in Git has a starting
-point; this is the first commit where the branch splits off (or ultimately the very first commit in
-the repo). Look back to the most recent `gl` output. In this case we would say that the commit with
-hash `5ac8ea0` is the tip of the `my-first-feature` branch. The branch reference itself points to
-the tip of the branch, and the base of the `my-first-feature` branch is `8adbc7b` (i.e. `main`).
-`70e6b9f` is the first commit specifically on the `my-first-feature` branch, so its parent is the
-base of the branch.
+First let's answer the question "what is the base of a branch?" Every branch in Git has a starting point; this is the first commit where the branch splits off (or ultimately the very first commit in the repo). Look back to the most recent `git gr` output. In this case we would say that the commit with hash `5ac8ea0` is the tip of the `my-first-feature` branch. The branch reference itself points to the tip of the branch, and the base of the `my-first-feature` branch is `8adbc7b` (i.e. `main`). `70e6b9f` is the first commit specifically on the `my-first-feature` branch, so its parent is the base of the branch.
 
-*Note that even if the `main` branch moved forward to point to a new commit (such as through a pull
-request merging to `main`), `8adbc7b` would remain the base of the `my-first-feature` branch. All
-that would change is that we could no longer refer to the base of the branch as `main` since that
-pointer moved. "Rebasing" refers to re-applying commits on top of a new base commit (or in some
-cases the same base), and the commits can be edited along the way.*
+*Note that even if the `main` branch moved forward to point to a new commit (such as through a pull request merging to `main`), `8adbc7b` would remain the base of the `my-first-feature` branch. All that would change is that we could no longer refer to the base of the branch as `main` since that pointer moved. "Rebasing" refers to re-applying commits on top of a new base commit (or in some cases the same base), and the commits can be edited along the way.*
 
 Enough theory for now, let's get to squashing commits with an interactive rebase:
 
@@ -563,16 +486,7 @@ pick 5ac8ea0 Finally got it working
 # Note that empty commits are commented out
 ```
 
-So what just happened? When starting an interactive rebase Git opens a file in your text editor
-called `git-rebase-todo`. This file controls the rebase process and we'll edit it to tell Git how
-we want to squash the commits. At the top of the file we see the commits from `my-first-feature`
-with the oldest commit at the top and the newest commit at the bottom. Git will go through this
-list from top to bottom re-applying the commits on top of the base commit that we specified (which
-in this case was still `main`). Different commands are available when applying a commit; in this
-case we are interested in the `p` (pick) and `s` (squash) commands. `pick` is the default and
-results in no changes to the commit. By specifying `s` to squash a commit we can combine multiple
-commits into one. Commits are squashed up into the previous commit, so somewhere along the chain
-you'll need to `pick` at least one commit. Let's edit the rebase todo to match the following
+So what just happened? When starting an interactive rebase Git opens a file in your text editor called `git-rebase-todo`. This file controls the rebase process and we'll edit it to tell Git how we want to squash the commits. At the top of the file we see the commits from `my-first-feature` with the oldest commit at the top and the newest commit at the bottom. Git will go through this list from top to bottom re-applying the commits on top of the base commit that we specified (which in this case was still `main`). Different commands are available when applying a commit; in this case we are interested in the `p` (pick) and `s` (squash) commands. `pick` is the default and results in no changes to the commit. By specifying `s` to squash a commit we can combine multiple commits into one. Commits are squashed up into the previous commit, so somewhere along the chain you'll need to `pick` at least one commit. Let's edit the rebase todo to match the following
 
 ```bash
 pick 70e6b9f Add a really cool feature
@@ -581,9 +495,7 @@ s 61284ab More integration testing
 s 5ac8ea0 Finally got it working
 ```
 
-This tells Git that we want to squash `5ac8ea0` up into `61284ab` and then up into `c9698e5` as the
-combined squashed commit. We'd like to keep `70e6b9f` as its own commit without changing it. After
-saving and quitting the editor it's time to Git to work...
+This tells Git that we want to squash `5ac8ea0` up into `61284ab` and then up into `c9698e5` as the combined squashed commit. We'd like to keep `70e6b9f` as its own commit without changing it. After saving and quitting the editor it's time to Git to work...
 
 <sub>...yes it's a terrible pun 🙄😛</sub>
 
@@ -620,8 +532,7 @@ Finally got it working
 #
 ```
 
-This file allows us to edit the commit message for the combined squashed commit. In this case we
-don't need to change anything, so we save and exit the editor to continue:
+This file allows us to edit the commit message for the combined squashed commit. In this case we don't need to change anything, so we save and exit the editor to continue:
 
 ```bash
 ...
@@ -640,7 +551,7 @@ and have 1 and 3 different commits each, respectively.
 nothing to commit, working tree clean
 
 # ...and take a look at the graph (which isn't a straight line anymore!)
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 99f448c (HEAD -> my-first-feature) Integration testing
 | * 5ac8ea0 (origin/my-first-feature) Finally got it working
 | * 61284ab More integration testing
@@ -651,11 +562,7 @@ nothing to commit, working tree clean
 * 3e228e1 Initial commit
 ```
 
-With the squash rebase complete our local version of the Git history on the "desktop" is now
-different than what GitHub thinks the Git history should be. Both repos agree that `70e6b9f` is the
-first commit on the `my-first-feature` branch, but the local branch only has one `99f448c` commit
-that comes after while the remote branch still has the three original commits. Just to be sure,
-let's diff between the local and remote branch to make sure the actual content is the same:
+With the squash rebase complete our local version of the Git history on the "desktop" is now different than what GitHub thinks the Git history should be. Both repos agree that `70e6b9f` is the first commit on the `my-first-feature` branch, but the local branch only has one `99f448c` commit that comes after while the remote branch still has the three original commits. Just to be sure, let's diff between the local and remote branch to make sure the actual content is the same:
 
 ```bash
 # This isn't normally necessary but just for sake of illustation in this example
@@ -664,10 +571,7 @@ let's diff between the local and remote branch to make sure the actual content i
 # No output because the branch content is identical
 ```
 
-Since we intentionally squashed the commits down in the local repo we know that the local repo is
-the current source of truth for the Git history. We would like to force other copies of the repo
-to update to match this new version of history. To tell GitHub that we want to overwrite the remote
-history to forcibly match the local history instead, all we need to do is `git push --force`.
+Since we intentionally squashed the commits down in the local repo we know that the local repo is the current source of truth for the Git history. We would like to force other copies of the repo to update to match this new version of history. To tell GitHub that we want to overwrite the remote history to forcibly match the local history instead, all we need to do is `git push --force`.
 
 ```bash
 # Time to force push
@@ -682,31 +586,24 @@ To github.com:<user>/git-workshop.git
  + 5ac8ea0...99f448c my-first-feature -> my-first-feature (forced update)
 
 # Check the updated graph
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 99f448c (HEAD -> my-first-feature, origin/my-first-feature) Integration testing
 * 70e6b9f Add a really cool feature
 * 8adbc7b (origin/main, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-After the force push the remote repo replaces its branch history to match what we forcibly pushed.
-We are now in agreement again between the "desktop" repo and GitHub.
+After the force push the remote repo replaces its branch history to match what we forcibly pushed. We are now in agreement again between the "desktop" repo and GitHub.
 
 ---
 
-***WARNING**: Again, this is dangerous territory; please force push responsibly. Rewriting history
-and force pushing should only be done on branches for which you are the sole author or after
-carefully coordinating with teammates on a shared branch. Before force pushing you need to know
-which repo has the actual source of truth and that meaningful changes haven't been introduced in
-another copy of the repo. After force pushing when switching to another machine or repo copy make
-sure that local repo has been updated to match the new overwritten history.*
+_**WARNING**: Again, this is dangerous territory; please force push responsibly. Rewriting history and force pushing should only be done on branches for which you are the sole author or after carefully coordinating with teammates on a shared branch. Before force pushing you need to know which repo has the actual source of truth and that meaningful changes haven't been introduced in another copy of the repo. After force pushing when switching to another machine or repo copy make sure that local repo has been updated to match the new overwritten history._
 
 ---
 
 ## Updating the other machine after rewriting history
 
-We left off with the "desktop" and GitHub repos agreeing to the newly squashed commits, but the
-"laptop" is still out of the loop. Let's bring it up to speed:
+We left off with the "desktop" and GitHub repos agreeing to the newly squashed commits, but the "laptop" is still out of the loop. Let's bring it up to speed:
 
 ```bash
 # Switch back to the "laptop"
@@ -730,7 +627,7 @@ and have 3 and 1 different commits each, respectively.
 
 nothing to commit, working tree clean
 
-~/src/git-workshop-2 $ gl
+~/src/git-workshop-2 $ git gr
 * 99f448c (origin/my-first-feature) Integration testing
 | * 5ac8ea0 (HEAD -> my-first-feature) Finally got it working
 | * 61284ab More integration testing
@@ -741,30 +638,21 @@ nothing to commit, working tree clean
 * 3e228e1 Initial commit
 ```
 
-The "laptop" repo and GitHub disagree on history. If we `git pull` or `git merge` in this case we
-risk introducing an unwanted merge commit.
+The "laptop" repo and GitHub disagree on history. If we `git pull` or `git merge` in this case we risk introducing an unwanted merge commit.
 
 ---
 
-*If we hadn't run `git fetch` first and seen that the history had diverged then we may have worked
-directly on the old copy of the branch. This creates creates a mess that has to be cleaned up later.
-Always stay aware of when the branch history is edited (this is another reason to limit the scope of
-branch history edits to personal branches for which you know the full history). Long-running
-branches (`main`, `develop`) should never have their history edited unless (1) it is absolutely
-necessary, (2) the need has been clearly communicated to all team members, and (3) the edit is done
-by a project admin.*
+*If we hadn't run `git fetch` first and seen that the history had diverged then we may have worked directly on the old copy of the branch. This creates creates a mess that has to be cleaned up later. Always stay aware of when the branch history is edited (this is another reason to limit the scope of branch history edits to personal branches for which you know the full history). Long-running branches (`main`, `develop`) should never have their history edited unless (1) it is absolutely necessary, (2) the need has been clearly communicated to all team members, and (3) the edit is done by a project admin.*
 
 ---
 
-How do we resolve the diverged history between the "laptop" and GitHub? We have a few options
-available:
+How do we resolve the diverged history between the "laptop" and GitHub? We have a few options available:
 
 * Delete the local branch and checkout a fresh copy from GitHub. For example (don't run this):
   * `git checkout main && git branch -d my-first-feature && git checkout my-first-feature`
 * Do a hard reset on the local branch to force it to point to the correct commit
 
-For either case, make sure there are no local changes that only exist on this old copy of the branch
-before fixing the branch otherwise those changes will be lost!
+For either case, make sure there are no local changes that only exist on this old copy of the branch before fixing the branch otherwise those changes will be lost!
 
 Let's do a hard reset this time:
 
@@ -772,44 +660,28 @@ Let's do a hard reset this time:
 ~/src/git-workshop-2 $ git reset --hard origin/my-first-feature
 HEAD is now at 99f448c Integration testing
 
-~/src/git-workshop-2 $ gl
+~/src/git-workshop-2 $ git gr
 * 99f448c (HEAD -> my-first-feature, origin/my-first-feature) Integration testing
 * 70e6b9f Add a really cool feature
 * 8adbc7b (origin/main, origin/HEAD, main) Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-Now everyone agrees on the history of the branch and it is safe to continue working from this
-machine.
+Now everyone agrees on the history of the branch and it is safe to continue working from this machine.
 
 ---
 
-***NOTE**: Even without squashing commits it is possible for history to diverge between copies of a
-repository when a branch is being modified from multiple copies of the repo at the same time
-without synchronizing. To avoid this headache, only work on the branch from one copy of the repo at
-a time and be sure to synchronize with the latest copy before starting any local work on a branch.*
+_**NOTE**: Even without squashing commits it is possible for history to diverge between copies of a repository when a branch is being modified from multiple copies of the repo at the same time without synchronizing. To avoid this headache, only work on the branch from one copy of the repo at a time and be sure to synchronize with the latest copy before starting any local work on a branch._
 
 ---
 
 ## Squashing and merging PRs
 
-After much hard work our feature is finally finished! Let's open a pull request (PR) on GitHub and
-merge the branch back to `main`.
+After much hard work our feature is finally finished! Let's open a pull request (PR) on GitHub and merge the branch back to `main`.
 
-Browse to the repository on GitHub. The main repo page may have a **Compare & pull request** button
-for the branch automatically if you pushed the branch to GitHub recently. If not, click on
-**2 branches** next to the `main` branch dropdown to browse to
-`https://github.com/<user>/git-workshop/branches`. At the far right side of your branch entry click
-the option to create a new pull request. Pull request details are outside the scope of this module;
-for now add a nice title and description and then click the green **Create pull request** button.
+Browse to the repository on GitHub. The main repo page may have a **Compare & pull request** button for the branch automatically if you pushed the branch to GitHub recently. If not, click on **2 branches** next to the `main` branch dropdown to browse to `https://github.com/<user>/git-workshop/branches`. At the far right side of your branch entry click the option to create a new pull request. Pull request details are outside the scope of this module; for now add a nice title and description and then click the green **Create pull request** button.
 
-The PR page on GitHub allows you to collaboratively review your code changes before merging. In this
-case let's go ahead and "merge" right away. Scroll down towards the button at the bottom of the page
-labeled **Merge pull request**. Click on the dropdown arrow on the right side of this button and
-instead select **Squash and merge**. This option will squash all of the commits from this PR down to
-a single commit and then rebase the squashed commit to the tip of `main` (the PR target in this
-case). After confirming the squash and merge, you can click the button that appears to delete the
-remote branch from GitHub. With the PR merged we no longer have any need for this branch.
+The PR page on GitHub allows you to collaboratively review your code changes before merging. In this case let's go ahead and "merge" right away. Scroll down towards the button at the bottom of the page labeled **Merge pull request**. Click on the dropdown arrow on the right side of this button and instead select **Squash and merge**. This option will squash all of the commits from this PR down to a single commit and then rebase the squashed commit to the tip of `main` (the PR target in this case). After confirming the squash and merge, you can click the button that appears to delete the remote branch from GitHub. With the PR merged we no longer have any need for this branch.
 
 Let's go back to the local "desktop" repo and fetch the latest changes after merging the PR:
 
@@ -830,7 +702,7 @@ remote: Total 3 (delta 0), reused 2 (delta 0), pack-reused 0
 Unpacking objects: 100% (3/3), 763 bytes | 763.00 KiB/s, done.
    8adbc7b..5a91f76  main       -> origin/main
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 5a91f76 (origin/main) My first feature (#1)
 | * 99f448c (HEAD -> my-first-feature) Integration testing
 | * 70e6b9f Add a really cool feature
@@ -839,9 +711,7 @@ Unpacking objects: 100% (3/3), 763 bytes | 763.00 KiB/s, done.
 * 3e228e1 Initial commit
 ```
 
-The `gl` output shows us that a new squashed commit was created at `origin/main`. Our local copy of
-`main` is still where it was and our local copy of the `my-first-feature` branch still exists. Let's
-diff between `my-first-feature` and `origin/main` to confirm that everything is the same
+The `git gr` output shows us that a new squashed commit was created at `origin/main`. Our local copy of `main` is still where it was and our local copy of the `my-first-feature` branch still exists. Let's diff between `my-first-feature` and `origin/main` to confirm that everything is the same
 
 ```bash
 ~/src/git-workshop $ git diff origin/main
@@ -849,8 +719,7 @@ diff between `my-first-feature` and `origin/main` to confirm that everything is 
 # No output, everything is the same
 ```
 
-To wrap things up in our local repo we should checkout main, pull the latest changes, and then
-delete the feature branch:
+To wrap things up in our local repo we should checkout main, pull the latest changes, and then delete the feature branch:
 
 ```bash
 ~/src/git-workshop $ git checkout main
@@ -875,14 +744,13 @@ Current branch main is up to date.
 ~/src/git-workshop $ git branch -D my-first-feature
 Deleted branch my-first-feature (was 99f448c).
 
-~/src/git-workshop $ gl
+~/src/git-workshop $ git gr
 * 5a91f76 (HEAD -> main, origin/main) My first feature (#1)
 * 8adbc7b Add content to helloworld.txt
 * 3e228e1 Initial commit
 ```
 
-This same procedure should be done on the "laptop" repo as well as any other copies of the repo to
-keep everything in sync.
+This same procedure should be done on the "laptop" repo as well as any other copies of the repo to keep everything in sync.
 
 ## Recap
 
@@ -904,8 +772,7 @@ In this module you learned:
 
 ## Extra notes for `git rebase -i`
 
-* Interactive rebases can also be used to edit commit messages for commits older than the most
-  recent. This can be done independently of squashing.
+* Interactive rebases can also be used to edit commit messages for commits older than the most recent. This can be done independently of squashing.
   * To edit the most recent commit message (or change it in general) you can also use
     `git commit --amend`.
 * Deleting a line from the rebase todo list will cause that commit to be dropped entirely.

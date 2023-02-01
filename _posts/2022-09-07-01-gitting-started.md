@@ -15,23 +15,11 @@ date:   2022-09-07 12:00:00 -0400
 
 According to the official Git website,
 
-> Git is a free and open source distributed version control system designed to handle everything
-from small to very large projects with speed and efficiency.
+> Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
 
-It's important to understand that Git is a distributed version control system, not a client-server
-system like SVN. Each copy of a Git repository is fully standalone. Projects will often have a
-main centralized repo hosted with an online provider such as [GitHub][github], but the repo on
-GitHub and local clones of that repo are all independent and self-sufficient. A local repo
-does not "check out" or "check in" files from the centralized server. Instead a local repo has all
-of the files and all of the content that it needs locally. Repos can be configured with
-[remotes][git-remotes] (independent repos on other machines/servers) that the local repo can
-synchronize with using [push][git-push] / [pull][git-pull] / [fetch][git-fetch] mechanisms. For now
-all that's important to understand is that there is no inherent need for a central server in Git.
+It's important to understand that Git is a distributed version control system, not a client-server system like SVN. Each copy of a Git repository is fully standalone. Projects will often have a main centralized repo hosted with an online provider such as [GitHub][github], but the repo on GitHub and local clones of that repo are all independent and self-sufficient. A local repo does not "check out" or "check in" files from the centralized server. Instead a local repo has all of the files and all of the content that it needs locally. Repos can be configured with [remotes][git-remotes] (independent repos on other machines/servers) that the local repo can synchronize with using [push][git-push] / [pull][git-pull] / [fetch][git-fetch] mechanisms. For now all that's important to understand is that there is no inherent need for a central server in Git.
 
-The [official documentation][git-docs] provides a set of [Git training videos][git-vids] as well as
-the [Pro Git][pro-git] book. You should start with these resources since they will provide a
-conceptual overview of Git. By contrast the modules in this workshop will focus on practical
-hands-on examples.
+The [official documentation][git-docs] provides a set of [Git training videos][git-vids] as well as the [Pro Git][pro-git] book. You should start with these resources since they will provide a conceptual overview of Git. By contrast the modules in this workshop will focus on practical hands-on examples.
 
 [github]:      https://github.com
 [git-remotes]: https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
@@ -84,33 +72,19 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-The new file `helloworld.txt` is identified by Git as **untracked** which means it is not currently
-under revision control. In Git a file can be in one of three areas:
+The new file `helloworld.txt` is identified by Git as **untracked** which means it is not currently under revision control. In Git a file can be in one of three areas:
 
-1. The **working tree**: This is the folder on your computer where you edit files and this is
-   where `helloworld.txt` is currently located. Changes in the working tree can be compared against
-   the repository using `git diff`.
-2. The **staging area**: In Git changes must be staged using the `git add` command before they are
-   committed. The staging area holds a temporary snapshot of changes that can either be committed or
-   unstaged. A file that has staged changes can still be modified in the working tree. While
-   iterating on code sometimes it's helpful to stage work-in-progress changes without creating a
-   commit so that you can continue to experiment with additional changes but have the safety net of
-   reverting to the staged changes.
+1. The **working tree**: This is the folder on your computer where you edit files and this is where `helloworld.txt` is currently located. Changes in the working tree can be compared against the repository using `git diff`.
 
-   Staged changes can be compared against the repository using `git diff --cached`. You can also
-   compare changes from the working tree against staged changes by using `git diff` after staging
-   files with `git add` and making additional changes.
+2. The **staging area**: In Git changes must be staged using the `git add` command before they are committed. The staging area holds a temporary snapshot of changes that can either be committed or unstaged. A file that has staged changes can still be modified in the working tree. While iterating on code sometimes it's helpful to stage work-in-progress changes without creating a commit so that you can continue to experiment with additional changes but have the safety net of reverting to the staged changes.
 
-   You can create a commit from staged changes while still having unstaged modifications in the
-   working tree. You can also use `git add` on a file that has already been staged to re-stage the
-   all of the latest modifications from the working-tree. To discard staged changes without
-   committing them you must first unstage them using `git restore` or `git reset`.
+   Staged changes can be compared against the repository using `git diff --cached`. You can also compare changes from the working tree against staged changes by using `git diff` after staging files with `git add` and making additional changes.
 
-   The staging area is also referred to as the "index," and files that are staged are sometimes
-   referred to as "cached."
-3. The **repository**: The repository contains of a series of snapshots (commits) of the file
-   contents over time. Each commit can also be thought of as a diff or changeset, and the Git
-   history is built up by applying changesets sequentially over each previous revision.
+   You can create a commit from staged changes while still having unstaged modifications in the working tree. You can also use `git add` on a file that has already been staged to re-stage the all of the latest modifications from the working-tree. To discard staged changes without committing them you must first unstage them using `git restore` or `git reset`.
+
+   The staging area is also referred to as the "index," and files that are staged are sometimes referred to as "cached."
+
+3. The **repository**: The repository contains of a series of snapshots (commits) of the file contents over time. Each commit can also be thought of as a diff or changeset, and the Git history is built up by applying changesets sequentially over each previous revision.
 
 Let's stage `helloworld.txt` and then create the first commit:
 
@@ -215,9 +189,7 @@ index e69de29..af5626b 100644
 ```
 Note the difference between the file content in the working tree, the staging index, and the repo.
 
-To stage the additional changes from the working tree we would use `git add` again. Instead let's
-discard the working tree changes using the command suggested by `git status` and only commit the
-changes that are already staged.
+To stage the additional changes from the working tree we would use `git add` again. Instead let's discard the working tree changes using the command suggested by `git status` and only commit the changes that are already staged.
 
 ```bash
 # Discard changes from the working tree
@@ -249,14 +221,9 @@ index e69de29..af5626b 100644
 
 ## Pushing the repo to GitHub
 
-[Create a new repository using this link][new-repo]. Create the repository under your personal
-account and name it `git-workshop`. Do not initialize the repository with a `README`, `.gitignore`,
-or license file.
+[Create a new repository using this link][new-repo]. Create the repository under your personal account and name it `git-workshop`. Do not initialize the repository with a `README`, `.gitignore`, or license file.
 
-After you create the GitHub repository you will be shown the steps required to add a remote
-to your local repo and then push the contents from your computer to GitHub. You can authenticate
-GitHub using HTTPS or [SSH keys][ssh-keys]. In this workshop we'll use SSH authentication, and you
-can replace `<user>` with your GitHub username.
+After you create the GitHub repository you will be shown the steps required to add a remote to your local repo and then push the contents from your computer to GitHub. You can authenticate GitHub using HTTPS or [SSH keys][ssh-keys]. In this workshop we'll use SSH authentication, and you can replace `<user>` with your GitHub username.
 
 ```bash
 # Add the GitHub repo as a remote named `origin`
@@ -272,12 +239,7 @@ can replace `<user>` with your GitHub username.
 ~/src/git-workshop $ git push -u origin main
 ```
 
-A local branch can have an upstream (tracking) reference. In this example, the local branch `main`
-is now set to track the remote branch `origin/main`. This means that when `main` is checked out
-locally `git push` will push commits from the local `main` branch to `origin/main` and `git pull`
-will pull commits from `origin/main` to the local `main` branch. The upstream reference only needs
-to be configured once; this typically happens when pushing a local branch to a remote or when
-checking out a remote branch locally.
+A local branch can have an upstream (tracking) reference. In this example, the local branch `main` is now set to track the remote branch `origin/main`. This means that when `main` is checked out locally `git push` will push commits from the local `main` branch to `origin/main` and `git pull` will pull commits from `origin/main` to the local `main` branch. The upstream reference only needs to be configured once; this typically happens when pushing a local branch to a remote or when checking out a remote branch locally.
 
 [new-repo]: https://github.com/new
 [ssh-keys]: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
@@ -339,12 +301,7 @@ On branch main
 nothing to commit, working tree clean
 ```
 
-This example shows that Git only tracks files and will not track empty directories. If you would
-like to commit a directory that does not contain any files (maybe you intend to add files later
-but want to make the directory now) one option is to add an empty `.gitkeep` file to the directory.
-Technically any name will work for the blank file, but `.gitkeep` is a common standard for this
-purpose. The `.gitkeep` file can later be deleted when there are other files stored in the
-directory.
+This example shows that Git only tracks files and will not track empty directories. If you would like to commit a directory that does not contain any files (maybe you intend to add files later but want to make the directory now) one option is to add an empty `.gitkeep` file to the directory. Technically any name will work for the blank file, but `.gitkeep` is a common standard for this purpose. The `.gitkeep` file can later be deleted when there are other files stored in the directory.
 
 ```bash
 # Add a .gitkeep file to our new directory
